@@ -1,5 +1,6 @@
-package ru.practicum.shareit.item.model;
+package ru.practicum.shareit.request.model;
 
+import java.time.LocalDateTime;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -10,19 +11,15 @@ import lombok.Setter;
 @Getter
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Item {
+public class ItemRequest {
 
     @EqualsAndHashCode.Include
     @Setter(AccessLevel.NONE)
     private Long id;
 
-    private String name;
-
     private String description;
 
-    private boolean available;
+    private long requesterId;
 
-    private long ownerId;
-
-    private Long requestId;
+    private LocalDateTime createdAt;
 }
