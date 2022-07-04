@@ -2,12 +2,12 @@ package ru.practicum.shareit.user.validation;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-import ru.practicum.shareit.user.dto.UserDto;
+import ru.practicum.shareit.user.dto.UpdateUserDto;
 
-public class UserPatchValidator implements ConstraintValidator<ValidUserPatch, UserDto> {
+public class UserPatchValidator implements ConstraintValidator<ValidUserPatch, UpdateUserDto> {
 
     @Override
-    public boolean isValid(UserDto patch, ConstraintValidatorContext context) {
+    public boolean isValid(UpdateUserDto patch, ConstraintValidatorContext context) {
         if (patch.getEmail() == null && patch.getName() == null) {
             return false;
         }

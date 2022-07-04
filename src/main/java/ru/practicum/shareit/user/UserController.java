@@ -6,13 +6,14 @@ import javax.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.practicum.shareit.user.dto.CreateUserDto;
+import ru.practicum.shareit.user.dto.UpdateUserDto;
 import ru.practicum.shareit.user.dto.UserDto;
 import ru.practicum.shareit.user.exception.UserNotFoundException;
 import ru.practicum.shareit.user.model.User;
@@ -34,9 +35,12 @@ public class UserController {
         return UserMapper.toDto(created);
     }
 
-    @PutMapping
-    public UserDto updateUser(@Valid @RequestBody UserDto dto) {
-        User updated = userService.updateUser(dto);
+    @PatchMapping("/{id}")
+    public UserDto updateUser(
+        @PathVariable("id") long userId,
+        @Valid @RequestBody UpdateUserDto dto
+    ) {
+        User updated = userService.updateUser(userId, dto);
         return UserMapper.toDto(updated);
     }
 

@@ -3,14 +3,13 @@ package ru.practicum.shareit.user.dto;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import ru.practicum.shareit.user.validation.ValidUserPatch;
 
 @AllArgsConstructor
 @Getter
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class UserDto {
-
-    @EqualsAndHashCode.Include
-    private final long id;
+@EqualsAndHashCode
+@ValidUserPatch
+public class UpdateUserDto {
 
     private final String name;
 

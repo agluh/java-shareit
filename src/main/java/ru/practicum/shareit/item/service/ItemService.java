@@ -3,7 +3,7 @@ package ru.practicum.shareit.item.service;
 import java.util.Collection;
 import java.util.Optional;
 import ru.practicum.shareit.item.dto.CreateItemDto;
-import ru.practicum.shareit.item.dto.ItemDto;
+import ru.practicum.shareit.item.dto.UpdateItemDto;
 import ru.practicum.shareit.item.exception.NotAnOwnerException;
 import ru.practicum.shareit.item.model.Item;
 
@@ -22,7 +22,7 @@ public interface ItemService {
      *
      * @throws NotAnOwnerException if current user is not an item owner
      */
-    Item updateItem(ItemDto dto);
+    Item updateItem(long itemId, UpdateItemDto dto);
 
     /**
      * Gets item by its identity.

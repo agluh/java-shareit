@@ -5,7 +5,7 @@ import java.util.Optional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.practicum.shareit.user.dto.CreateUserDto;
-import ru.practicum.shareit.user.dto.UserDto;
+import ru.practicum.shareit.user.dto.UpdateUserDto;
 import ru.practicum.shareit.user.exception.UserNotFoundException;
 import ru.practicum.shareit.user.model.User;
 import ru.practicum.shareit.user.repository.UserRepository;
@@ -25,8 +25,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateUser(UserDto dto) {
-        User user = userRepository.getById(dto.getId()).orElseThrow(UserNotFoundException::new);
+    public User updateUser(long userId, UpdateUserDto dto) {
+        User user = userRepository.getById(userId).orElseThrow(UserNotFoundException::new);
         if (dto.getName() != null) {
             user.setName(dto.getName());
         }
