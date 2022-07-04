@@ -1,5 +1,5 @@
 package ru.practicum.shareit.request.dto;
 
 public class ItemRequestDto {
-    // todo:
+    // todo: to be implemented in future sprints
 }

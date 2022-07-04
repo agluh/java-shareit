@@ -1,5 +1,5 @@
 package ru.practicum.shareit.booking.dto;
 
 public class BookingDto {
-    // todo:
+    // todo: to be implemented in future sprints
 }
