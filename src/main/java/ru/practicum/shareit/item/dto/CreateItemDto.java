@@ -8,11 +8,8 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class ItemDto {
-
-    @EqualsAndHashCode.Include
-    private final long id;
+@EqualsAndHashCode
+public class CreateItemDto {
 
     @NotNull
     @NotBlank
@@ -22,5 +19,6 @@ public class ItemDto {
     @NotBlank
     private final String description;
 
-    private final boolean available;
+    @NotNull
+    private final Boolean available;
 }

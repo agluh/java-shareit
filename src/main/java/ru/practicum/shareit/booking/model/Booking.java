@@ -1,5 +1,6 @@
-package ru.practicum.shareit.item.model;
+package ru.practicum.shareit.booking.model;
 
+import java.time.LocalDateTime;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -10,19 +11,19 @@ import lombok.Setter;
 @Getter
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Item {
+public class Booking {
 
     @EqualsAndHashCode.Include
     @Setter(AccessLevel.NONE)
     private Long id;
 
-    private String name;
+    private LocalDateTime start;
 
-    private String description;
+    private LocalDateTime end;
 
-    private boolean available;
+    private long itemId;
 
-    private long ownerId;
+    private long bookerId;
 
-    private Long requestId;
+    private BookingStatus status;
 }

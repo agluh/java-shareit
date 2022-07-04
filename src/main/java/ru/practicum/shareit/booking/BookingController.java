@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * // TODO .
+ * Controller of booking.
  */
 @RestController
 @RequestMapping(path = "/bookings")

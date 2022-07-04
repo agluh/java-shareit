@@ -1,4 +1,4 @@
-package ru.practicum.shareit.item.model;
+package ru.practicum.shareit.user.model;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -10,7 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Item {
+public class User {
 
     @EqualsAndHashCode.Include
     @Setter(AccessLevel.NONE)
@@ -18,11 +18,5 @@ public class Item {
 
     private String name;
 
-    private String description;
-
-    private boolean available;
-
-    private long ownerId;
-
-    private Long requestId;
+    private String email;
 }
