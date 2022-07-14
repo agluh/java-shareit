@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User updateUser(long userId, UpdateUserDto dto) {
-        User user = userRepository.getById(userId).orElseThrow(UserNotFoundException::new);
+        User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
         if (dto.getName() != null) {
             user.setName(dto.getName());
         }
@@ -39,17 +39,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> getUser(long userId) {
-        return userRepository.getById(userId);
+        return userRepository.findById(userId);
     }
 
     @Override
     public Collection<User> getUsers() {
-        return userRepository.getAll();
+        return userRepository.findAll();
     }
 
     @Override
     public void deleteUser(long userId) {
-        User user = userRepository.getById(userId).orElseThrow(UserNotFoundException::new);
+        User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
         userRepository.delete(user);
     }
 }

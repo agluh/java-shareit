@@ -22,7 +22,7 @@ public interface ItemService {
      *
      * @throws NotAnOwnerException if current user is not an item owner
      */
-    Item updateItem(long itemId, UpdateItemDto dto);
+    Item updateItem(UpdateItemDto dto);
 
     /**
      * Gets item by its identity.

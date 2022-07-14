@@ -1,7 +1,7 @@
-package ru.practicum.shareit.item.dto;
+package ru.practicum.shareit.booking.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import javax.validation.constraints.NotBlank;
+import java.time.LocalDateTime;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -11,20 +11,17 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @EqualsAndHashCode
-public class CreateItemDto {
+public class CreateBookingDto {
 
     @JsonIgnore
     @Setter
     private long userId;
 
     @NotNull
-    @NotBlank
-    private final String name;
+    private LocalDateTime start;
 
     @NotNull
-    @NotBlank
-    private final String description;
+    private LocalDateTime end;
 
-    @NotNull
-    private final Boolean available;
+    private long itemId;
 }

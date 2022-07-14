@@ -3,7 +3,7 @@ package ru.practicum.shareit.item.exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(HttpStatus.NOT_FOUND)
-public class NotAnOwnerException extends RuntimeException {
+@ResponseStatus(HttpStatus.BAD_REQUEST)
+public class NotABookerException extends RuntimeException {
 
 }

@@ -11,20 +11,17 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @EqualsAndHashCode
-public class CreateItemDto {
+public class CreateCommentDto {
 
     @JsonIgnore
     @Setter
     private long userId;
 
-    @NotNull
-    @NotBlank
-    private final String name;
+    @JsonIgnore
+    @Setter
+    private long itemId;
 
     @NotNull
     @NotBlank
-    private final String description;
-
-    @NotNull
-    private final Boolean available;
+    private final String text;
 }
