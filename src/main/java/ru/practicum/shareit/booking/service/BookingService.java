@@ -11,13 +11,13 @@ public interface BookingService {
 
     Booking createBooking(CreateBookingDto dto);
 
-    Booking reviewBooking(long bookingId, long userId, boolean isApproved);
+    Booking reviewBooking(long bookingId, boolean isApproved);
 
-    Optional<Booking> getBooking(long bookingId, long userId);
+    Optional<Booking> getBooking(long bookingId);
 
-    Collection<Booking> getBookingsOfUser(long userId, BookingState state);
+    Collection<Booking> getBookingsOfCurrentUser(BookingState state);
 
-    Collection<Booking> getItemBookingsOfUser(long userId, BookingState state);
+    Collection<Booking> getItemBookingsOfCurrentUser(BookingState state);
 
     Booking getPreviousBookingOfItem(long itemId, LocalDateTime now);
 

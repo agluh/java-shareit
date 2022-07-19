@@ -17,10 +17,6 @@ public class UpdateItemDto {
     @JsonIgnore
     private long itemId;
 
-    @Setter
-    @JsonIgnore
-    private long userId;
-
     private final String name;
 
     private final String description;

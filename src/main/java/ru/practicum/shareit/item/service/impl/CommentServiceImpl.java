@@ -15,9 +15,8 @@ import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.item.repository.CommentRepository;
 import ru.practicum.shareit.item.service.CommentService;
 import ru.practicum.shareit.item.service.ItemService;
-import ru.practicum.shareit.user.exception.UserNotFoundException;
+import ru.practicum.shareit.security.AuthService;
 import ru.practicum.shareit.user.model.User;
-import ru.practicum.shareit.user.service.UserService;
 
 @Service
 @AllArgsConstructor
@@ -26,12 +25,12 @@ public class CommentServiceImpl implements CommentService {
     private final CommentRepository commentRepository;
     private final ItemService itemService;
     private final BookingService bookingService;
-    private final UserService userService;
+    private final AuthService authService;
 
     @Override
     @Transactional
     public Comment addComment(CreateCommentDto dto) {
-        boolean hasBooked = bookingService.getBookingsOfUser(dto.getUserId(), BookingState.PAST)
+        boolean hasBooked = bookingService.getBookingsOfCurrentUser(BookingState.PAST)
             .stream()
             .anyMatch(e -> e.getItem().getId() == dto.getItemId()
                 && e.getStatus() == BookingStatus.APPROVED);
@@ -43,8 +42,7 @@ public class CommentServiceImpl implements CommentService {
         Item item = itemService.getItem(dto.getItemId())
             .orElseThrow(ItemNotFoundException::new);
 
-        User user = userService.getUser(dto.getUserId())
-            .orElseThrow(UserNotFoundException::new);
+        User user = authService.getCurrentUser();
 
         Comment comment = new Comment(null, dto.getText(), item, user, LocalDateTime.now());
         item.addComment(comment);

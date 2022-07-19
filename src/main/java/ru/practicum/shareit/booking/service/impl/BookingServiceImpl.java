@@ -22,9 +22,8 @@ import ru.practicum.shareit.item.exception.ItemNotFoundException;
 import ru.practicum.shareit.item.exception.NotAnOwnerException;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.item.service.ItemService;
-import ru.practicum.shareit.user.exception.UserNotFoundException;
+import ru.practicum.shareit.security.AuthService;
 import ru.practicum.shareit.user.model.User;
-import ru.practicum.shareit.user.service.UserService;
 
 @Service
 @AllArgsConstructor
@@ -32,7 +31,7 @@ public class BookingServiceImpl implements BookingService {
 
     private final BookingRepository bookingRepository;
     private final ItemService itemService;
-    private final UserService userService;
+    private final AuthService authService;
 
     @Override
     public Booking createBooking(CreateBookingDto dto) {
@@ -51,12 +50,11 @@ public class BookingServiceImpl implements BookingService {
             throw new ItemIsNotAvailableForBookingException();
         }
 
-        if (item.getOwner().getId() == dto.getUserId()) {
+        User user = authService.getCurrentUser();
+
+        if (item.getOwner().getId().equals(user.getId())) {
             throw new SelfBookingNotAllowedException();
         }
-
-        User user = userService.getUser(dto.getUserId())
-            .orElseThrow(UserNotFoundException::new);
 
         Booking booking = new Booking(null, dto.getStart(), dto.getEnd(), item,
             user, BookingStatus.WAITING);
@@ -65,11 +63,13 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public Booking reviewBooking(long bookingId, long userId, boolean isApproved) {
+    public Booking reviewBooking(long bookingId, boolean isApproved) {
         Booking booking = bookingRepository.findById(bookingId)
             .orElseThrow(BookingNotFoundException::new);
 
-        if (booking.getItem().getOwner().getId() != userId) {
+        User user = authService.getCurrentUser();
+
+        if (!booking.getItem().getOwner().getId().equals(user.getId())) {
             throw new NotAnOwnerException();
         }
 
@@ -83,12 +83,14 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public Optional<Booking> getBooking(long bookingId, long userId) {
+    public Optional<Booking> getBooking(long bookingId) {
         Booking booking = bookingRepository.findById(bookingId)
             .orElseThrow(BookingNotFoundException::new);
 
-        if (booking.getItem().getOwner().getId() != userId
-            && booking.getBooker().getId() != userId) {
+        User user = authService.getCurrentUser();
+
+        if (!booking.getItem().getOwner().getId().equals(user.getId())
+            && !booking.getBooker().getId().equals(user.getId())) {
             throw new NotAnOwnerOrBookerException();
         }
 
@@ -96,29 +98,29 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public Collection<Booking> getBookingsOfUser(long userId, BookingState state) {
-        userService.getUser(userId).orElseThrow(UserNotFoundException::new);
+    public Collection<Booking> getBookingsOfCurrentUser(BookingState state) {
+        User user = authService.getCurrentUser();
 
         switch (state) {
             case WAITING:
-                return bookingRepository.findBookingsByBookerIdAndStatusOrderByStartDesc(userId,
-                    BookingStatus.WAITING);
+                return bookingRepository.findBookingsByBookerIdAndStatusOrderByStartDesc(
+                    user.getId(), BookingStatus.WAITING);
             case REJECTED:
-                return bookingRepository.findBookingsByBookerIdAndStatusOrderByStartDesc(userId,
-                    BookingStatus.REJECTED);
+                return bookingRepository.findBookingsByBookerIdAndStatusOrderByStartDesc(
+                    user.getId(), BookingStatus.REJECTED);
             case PAST:
-                return bookingRepository.findBookingsByBookerIdAndEndBeforeOrderByStartDesc(userId,
-                    LocalDateTime.now());
+                return bookingRepository.findBookingsByBookerIdAndEndBeforeOrderByStartDesc(
+                    user.getId(), LocalDateTime.now());
             case FUTURE:
-                return bookingRepository.findBookingsByBookerIdAndStartAfterOrderByStartDesc(userId,
-                    LocalDateTime.now());
+                return bookingRepository.findBookingsByBookerIdAndStartAfterOrderByStartDesc(
+                    user.getId(), LocalDateTime.now());
             case CURRENT:
                 LocalDateTime now = LocalDateTime.now();
                 return bookingRepository
-                    .findBookingsByBookerIdAndStartBeforeAndEndAfterOrderByStartDesc(userId, now,
-                        now);
+                    .findBookingsByBookerIdAndStartBeforeAndEndAfterOrderByStartDesc(
+                        user.getId(), now, now);
             case ALL:
-                return bookingRepository.findBookingsByBookerIdOrderByStartDesc(userId);
+                return bookingRepository.findBookingsByBookerIdOrderByStartDesc(user.getId());
 
             default:
                 throw new IllegalArgumentException("This should not have happened");
@@ -126,10 +128,8 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public Collection<Booking> getItemBookingsOfUser(long userId, BookingState state) {
-        userService.getUser(userId).orElseThrow(UserNotFoundException::new);
-
-        Collection<Long> ids = itemService.getItemsOfUser(userId).stream()
+    public Collection<Booking> getItemBookingsOfCurrentUser(BookingState state) {
+        Collection<Long> ids = itemService.getItemsOfCurrentUser().stream()
             .map(Item::getId)
             .collect(Collectors.toList());
 

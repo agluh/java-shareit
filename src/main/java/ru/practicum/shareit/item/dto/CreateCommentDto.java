@@ -15,10 +15,6 @@ public class CreateCommentDto {
 
     @JsonIgnore
     @Setter
-    private long userId;
-
-    @JsonIgnore
-    @Setter
     private long itemId;
 
     @NotNull

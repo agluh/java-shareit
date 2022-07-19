@@ -32,7 +32,7 @@ public interface ItemService {
     /**
      * Gets all items of a user.
      */
-    Collection<Item> getItemsOfUser(long userId);
+    Collection<Item> getItemsOfCurrentUser();
 
     /**
      * Searches items by names and descriptions.
