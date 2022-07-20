@@ -17,7 +17,8 @@ public class RestApiErrorHandler {
         ConstraintViolationException.class,
         HttpMessageNotReadableException.class,
         MethodArgumentNotValidException.class,
-        MethodArgumentTypeMismatchException.class
+        MethodArgumentTypeMismatchException.class,
+        IllegalArgumentException.class
     })
     public void handleErrors() {
         // nothing to do
