@@ -7,7 +7,7 @@ import ru.practicum.shareit.item.model.Item;
 
 public interface ItemRepository extends JpaRepository<Item, Long> {
 
-    Collection<Item> findItemsByOwnerId(long userId);
+    Collection<Item> findItemsByOwnerIdOrderByIdAsc(long userId);
 
     @Query(
         "SELECT i FROM Item i " +

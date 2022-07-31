@@ -4,20 +4,24 @@ import java.util.Collection;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Setter;
 
 @AllArgsConstructor
 @Getter
+@Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class ItemDto {
 
     @EqualsAndHashCode.Include
-    private final long id;
+    private long id;
 
-    private final String name;
+    private String name;
 
-    private final String description;
+    private String description;
 
-    private final boolean available;
+    private boolean available;
 
-    private final Collection<CommentDto> comments;
+    private Long requestId;
+
+    private Collection<CommentDto> comments;
 }

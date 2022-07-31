@@ -1,6 +1,5 @@
 package ru.practicum.shareit.booking.service;
 
-import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Optional;
 import ru.practicum.shareit.booking.dto.CreateBookingDto;
@@ -19,7 +18,7 @@ public interface BookingService {
 
     Collection<Booking> getItemBookingsOfCurrentUser(BookingState state);
 
-    Booking getPreviousBookingOfItem(long itemId, LocalDateTime now);
+    Booking getPreviousBookingOfItem(long itemId);
 
-    Booking getNextBookingOfItem(long itemId, LocalDateTime now);
+    Booking getNextBookingOfItem(long itemId);
 }

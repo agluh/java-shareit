@@ -1,5 +1,6 @@
 package ru.practicum.shareit.item.service.impl;
 
+import java.time.Clock;
 import java.time.LocalDateTime;
 import javax.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -26,6 +27,7 @@ public class CommentServiceImpl implements CommentService {
     private final ItemService itemService;
     private final BookingService bookingService;
     private final AuthService authService;
+    private final Clock clock;
 
     @Override
     @Transactional
@@ -44,7 +46,7 @@ public class CommentServiceImpl implements CommentService {
 
         User user = authService.getCurrentUser();
 
-        Comment comment = new Comment(null, dto.getText(), item, user, LocalDateTime.now());
+        Comment comment = new Comment(null, dto.getText(), item, user, LocalDateTime.now(clock));
         item.addComment(comment);
         commentRepository.save(comment);
         return comment;

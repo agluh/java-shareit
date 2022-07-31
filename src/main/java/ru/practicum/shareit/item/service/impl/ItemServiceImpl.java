@@ -13,6 +13,9 @@ import ru.practicum.shareit.item.exception.NotAnOwnerException;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.item.repository.ItemRepository;
 import ru.practicum.shareit.item.service.ItemService;
+import ru.practicum.shareit.request.exception.ItemRequestNotFoundException;
+import ru.practicum.shareit.request.model.ItemRequest;
+import ru.practicum.shareit.request.service.ItemRequestService;
 import ru.practicum.shareit.security.AuthService;
 import ru.practicum.shareit.user.model.User;
 
@@ -25,13 +28,20 @@ public class ItemServiceImpl implements ItemService {
 
     private final ItemRepository itemRepository;
     private final AuthService authService;
+    private final ItemRequestService requestService;
 
     @Override
     public Item createItem(CreateItemDto dto) {
         User user = authService.getCurrentUser();
 
+        ItemRequest request = null;
+        if (dto.getRequestId() != null) {
+            request = requestService.getItemRequest(dto.getRequestId())
+                .orElseThrow(ItemRequestNotFoundException::new);
+        }
+
         Item item = new Item(null, dto.getName(), dto.getDescription(), dto.getAvailable(),
-            user, null);
+            user, request);
         itemRepository.save(item);
         return item;
     }
@@ -71,7 +81,7 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public Collection<Item> getItemsOfCurrentUser() {
         User user = authService.getCurrentUser();
-        return itemRepository.findItemsByOwnerId(user.getId());
+        return itemRepository.findItemsByOwnerIdOrderByIdAsc(user.getId());
     }
 
     @Override

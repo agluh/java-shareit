@@ -1,17 +1,19 @@
 package ru.practicum.shareit.user.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import ru.practicum.shareit.user.validation.ValidUserPatch;
 
-@AllArgsConstructor
+@NoArgsConstructor
 @Getter
+@Setter
 @EqualsAndHashCode
 @ValidUserPatch
 public class UpdateUserDto {
 
-    private final String name;
+    private String name;
 
-    private final String email;
+    private String email;
 }

@@ -1,5 +1,6 @@
 package ru.practicum.shareit.booking.service.impl;
 
+import java.time.Clock;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Collections;
@@ -32,6 +33,7 @@ public class BookingServiceImpl implements BookingService {
     private final BookingRepository bookingRepository;
     private final ItemService itemService;
     private final AuthService authService;
+    private final Clock clock;
 
     @Override
     public Booking createBooking(CreateBookingDto dto) {
@@ -39,7 +41,7 @@ public class BookingServiceImpl implements BookingService {
             throw new IllegalArgumentException("Bad date range");
         }
 
-        if (dto.getStart().isBefore(LocalDateTime.now())) {
+        if (dto.getStart().isBefore(LocalDateTime.now(clock))) {
             throw new IllegalArgumentException("Start date is in the past");
         }
 
@@ -94,7 +96,7 @@ public class BookingServiceImpl implements BookingService {
             throw new NotAnOwnerOrBookerException();
         }
 
-        return bookingRepository.findById(bookingId);
+        return Optional.of(booking);
     }
 
     @Override
@@ -110,12 +112,12 @@ public class BookingServiceImpl implements BookingService {
                     user.getId(), BookingStatus.REJECTED);
             case PAST:
                 return bookingRepository.findBookingsByBookerIdAndEndBeforeOrderByStartDesc(
-                    user.getId(), LocalDateTime.now());
+                    user.getId(), LocalDateTime.now(clock));
             case FUTURE:
                 return bookingRepository.findBookingsByBookerIdAndStartAfterOrderByStartDesc(
-                    user.getId(), LocalDateTime.now());
+                    user.getId(), LocalDateTime.now(clock));
             case CURRENT:
-                LocalDateTime now = LocalDateTime.now();
+                LocalDateTime now = LocalDateTime.now(clock);
                 return bookingRepository
                     .findBookingsByBookerIdAndStartBeforeAndEndAfterOrderByStartDesc(
                         user.getId(), now, now);
@@ -139,21 +141,22 @@ public class BookingServiceImpl implements BookingService {
 
         switch (state) {
             case WAITING:
-                return bookingRepository.findBookingsByItemIdInAndStatusOrderByStartDesc(ids,
-                    BookingStatus.WAITING);
+                return bookingRepository.findBookingsByItemIdInAndStatusOrderByStartDesc(
+                    ids, BookingStatus.WAITING);
             case REJECTED:
-                return bookingRepository.findBookingsByItemIdInAndStatusOrderByStartDesc(ids,
-                    BookingStatus.REJECTED);
+                return bookingRepository.findBookingsByItemIdInAndStatusOrderByStartDesc(
+                    ids, BookingStatus.REJECTED);
             case PAST:
-                return bookingRepository.findBookingsByItemIdInAndEndBeforeOrderByStartDesc(ids,
-                    LocalDateTime.now());
+                return bookingRepository.findBookingsByItemIdInAndEndBeforeOrderByStartDesc(
+                    ids, LocalDateTime.now(clock));
             case FUTURE:
-                return bookingRepository.findBookingsByItemIdInAndStartAfterOrderByStartDesc(ids,
-                    LocalDateTime.now());
+                return bookingRepository.findBookingsByItemIdInAndStartAfterOrderByStartDesc(
+                    ids, LocalDateTime.now(clock));
             case CURRENT:
-                LocalDateTime now = LocalDateTime.now();
+                LocalDateTime now = LocalDateTime.now(clock);
                 return bookingRepository
-                    .findBookingsByItemIdInAndStartBeforeAndEndAfterOrderByStartDesc(ids, now, now);
+                    .findBookingsByItemIdInAndStartBeforeAndEndAfterOrderByStartDesc(
+                        ids, now, now);
             case ALL:
                 return bookingRepository.findBookingsByItemIdInOrderByStartDesc(ids);
 
@@ -163,7 +166,8 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public Booking getPreviousBookingOfItem(long itemId, LocalDateTime now) {
+    public Booking getPreviousBookingOfItem(long itemId) {
+        LocalDateTime now = LocalDateTime.now(clock);
         return bookingRepository.findBookingsByItemIdAndEndBeforeOrderByStartDesc(itemId, now)
             .stream()
             .max(Comparator.comparing(Booking::getEnd))
@@ -171,7 +175,8 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public Booking getNextBookingOfItem(long itemId, LocalDateTime now) {
+    public Booking getNextBookingOfItem(long itemId) {
+        LocalDateTime now = LocalDateTime.now(clock);
         return bookingRepository.findBookingsByItemIdAndStartAfterOrderByStartDesc(itemId, now)
             .stream()
             .findFirst()
