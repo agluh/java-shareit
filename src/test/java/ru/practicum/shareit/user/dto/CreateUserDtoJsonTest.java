@@ -14,7 +14,8 @@ class CreateUserDtoJsonTest {
     private JacksonTester<CreateUserDto> json;
 
     @Test
-    public void givenCorrectJson_whenParseJson_thenCorrectObjectShouldBeReturned() throws Exception {
+    public void givenCorrectJson_whenParseJson_thenCorrectObjectShouldBeReturned()
+            throws Exception {
         // Given
         String jsonContent = "{\"name\":\"Name\",\"email\":\"email@example.com\"}";
 

@@ -35,7 +35,8 @@ class BookingControllerTest {
 
     @Test
     public void givenCorrectData_whenDoPostNewBooking_thenStatus200() throws Exception {
-        String jsonContent = "{\"start\":\"2022-08-01T09:50:00\",\"end\":\"2022-08-02T09:50:00\",\"itemId\":1}";
+        String jsonContent =
+            "{\"start\":\"2022-08-01T09:50:00\",\"end\":\"2022-08-02T09:50:00\",\"itemId\":1}";
 
         this.mockMvc
             .perform(post("/bookings")

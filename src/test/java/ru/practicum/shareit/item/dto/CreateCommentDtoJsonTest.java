@@ -14,7 +14,8 @@ class CreateCommentDtoJsonTest {
     private JacksonTester<CreateCommentDto> json;
 
     @Test
-    public void givenCorrectJson_whenParseJson_thenCorrectObjectShouldBeReturned() throws Exception {
+    public void givenCorrectJson_whenParseJson_thenCorrectObjectShouldBeReturned()
+            throws Exception {
         // Given
         String jsonContent = "{\"text\":\"Comment\"}";
 

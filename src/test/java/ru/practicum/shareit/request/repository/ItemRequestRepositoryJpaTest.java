@@ -26,12 +26,14 @@ class ItemRequestRepositoryJpaTest {
     void givenStoredItemRequest_whenFindItemRequestsByRequester_thenCorrectListShouldBeReturned() {
         // Given
         User requester = new User(null, "User name", "email@example.com");
-        ItemRequest request = new ItemRequest(null,"Item description", requester, LocalDateTime.now());
+        ItemRequest request = new ItemRequest(null, "Item description",
+            requester, LocalDateTime.now());
         em.persist(requester);
         em.persist(request);
 
         // When
-        Collection<ItemRequest> result = repository.findItemRequestsByRequester_IdOrderByCreatedAtDesc(requester.getId());
+        Collection<ItemRequest> result =
+            repository.findItemRequestsByRequester_IdOrderByCreatedAtDesc(requester.getId());
 
         // Then
         then(result).size().isEqualTo(1);
@@ -43,13 +45,16 @@ class ItemRequestRepositoryJpaTest {
         // Given
         User requester = new User(null, "User name", "email@example.com");
         User user = new User(null, "User name 2", "email2@example.com");
-        ItemRequest request = new ItemRequest(null,"Item description", requester, LocalDateTime.now());
+        ItemRequest request = new ItemRequest(null, "Item description",
+            requester, LocalDateTime.now());
         em.persist(requester);
         em.persist(user);
         em.persist(request);
 
         // When
-        Collection<ItemRequest> result = repository.findItemRequestsByRequester_IdIsNotOrderByCreatedAtDesc(user.getId(), Pageable.unpaged());
+        Collection<ItemRequest> result =
+            repository.findItemRequestsByRequester_IdIsNotOrderByCreatedAtDesc(user.getId(),
+                Pageable.unpaged());
 
         // Then
         then(result).size().isEqualTo(1);

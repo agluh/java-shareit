@@ -19,7 +19,7 @@ import ru.practicum.shareit.booking.model.BookingState;
 import ru.practicum.shareit.booking.model.BookingStatus;
 import ru.practicum.shareit.booking.service.BookingService;
 import ru.practicum.shareit.item.dto.CreateCommentDto;
-import ru.practicum.shareit.item.exception.NotABookerException;
+import ru.practicum.shareit.item.exception.NotBookerException;
 import ru.practicum.shareit.item.model.Comment;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.item.repository.CommentRepository;
@@ -59,7 +59,8 @@ class CommentServiceImplTest {
         Booking booking = Mockito.mock(Booking.class);
         when(booking.getItem()).thenReturn(item);
         when(booking.getStatus()).thenReturn(BookingStatus.APPROVED);
-        when(bookingService.getBookingsOfCurrentUser(BookingState.PAST)).thenReturn(List.of(booking));
+        when(bookingService.getBookingsOfCurrentUser(BookingState.PAST))
+            .thenReturn(List.of(booking));
 
         CreateCommentDto dto = Mockito.mock(CreateCommentDto.class);
         when(dto.getItemId()).thenReturn(1L);
@@ -77,7 +78,8 @@ class CommentServiceImplTest {
     @Test
     void givenUserNotBooker_whenCreateComment_thenErrorShouldBeThrown() {
         // Given
-        when(bookingService.getBookingsOfCurrentUser(BookingState.PAST)).thenReturn(Collections.emptyList());
+        when(bookingService.getBookingsOfCurrentUser(BookingState.PAST))
+            .thenReturn(Collections.emptyList());
 
         CreateCommentDto dto = Mockito.mock(CreateCommentDto.class);
 
@@ -85,6 +87,6 @@ class CommentServiceImplTest {
         final Throwable throwable = catchThrowable(() -> service.addComment(dto));
 
         // Then
-        then(throwable).isInstanceOf(NotABookerException.class);
+        then(throwable).isInstanceOf(NotBookerException.class);
     }
 }

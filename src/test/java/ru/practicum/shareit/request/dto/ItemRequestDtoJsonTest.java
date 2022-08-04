@@ -19,7 +19,8 @@ class ItemRequestDtoJsonTest {
     private JacksonTester<ItemRequestDto> json;
 
     @Test
-    void givenItemRequestDto_whenSerializeToJson_thenCorrectJsonShouldBeReturned() throws IOException {
+    void givenItemRequestDto_whenSerializeToJson_thenCorrectJsonShouldBeReturned()
+            throws IOException {
         // Given
         final long requestId = 1;
         final long itemId = 1;
@@ -41,9 +42,12 @@ class ItemRequestDtoJsonTest {
         then(result).extractingJsonPathStringValue("$.created").isEqualTo("2022-08-01T09:50:00");
         then(result).hasJsonPathArrayValue("$.items");
         then(result).extractingJsonPathNumberValue("$.items[0].id").isEqualTo((int) itemId);
-        then(result).extractingJsonPathStringValue("$.items[0].name").isEqualTo(itemName);
-        then(result).extractingJsonPathStringValue("$.items[0].description").isEqualTo(itemDescription);
+        then(result).extractingJsonPathStringValue("$.items[0].name")
+            .isEqualTo(itemName);
+        then(result).extractingJsonPathStringValue("$.items[0].description")
+            .isEqualTo(itemDescription);
         then(result).extractingJsonPathBooleanValue("$.items[0].available").isTrue();
-        then(result).extractingJsonPathNumberValue("$.items[0].requestId").isEqualTo((int) requestId);
+        then(result).extractingJsonPathNumberValue("$.items[0].requestId")
+            .isEqualTo((int) requestId);
     }
 }

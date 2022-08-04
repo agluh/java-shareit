@@ -67,7 +67,8 @@ class ItemControllerTest {
 
     @Test
     public void givenCorrectData_whenDoAddItem_thenStatus200() throws Exception {
-        String jsonContent = "{\"name\":\"Name\",\"description\":\"Description\",\"available\":true}";
+        String jsonContent =
+            "{\"name\":\"Name\",\"description\":\"Description\",\"available\":true}";
 
         this.mockMvc
             .perform(post("/items")
@@ -91,7 +92,8 @@ class ItemControllerTest {
 
     @Test
     public void givenCorrectData_whenDoPatchItem_thenStatus200() throws Exception {
-        String jsonContent = "{\"name\":\"Name\",\"description\":\"Description\",\"available\":true}";
+        String jsonContent =
+            "{\"name\":\"Name\",\"description\":\"Description\",\"available\":true}";
 
         this.mockMvc
             .perform(patch("/items/1")
@@ -115,7 +117,8 @@ class ItemControllerTest {
 
     @Test
     public void givenNotExistedItem_whenDoPatchItem_thenStatus404() throws Exception {
-        String jsonContent = "{\"name\":\"Name\",\"description\":\"Description\",\"available\":true}";
+        String jsonContent =
+            "{\"name\":\"Name\",\"description\":\"Description\",\"available\":true}";
         when(itemService.updateItem(any())).thenThrow(ItemNotFoundException.class);
 
         this.mockMvc

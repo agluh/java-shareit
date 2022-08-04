@@ -10,7 +10,7 @@ import ru.practicum.shareit.booking.model.BookingStatus;
 import ru.practicum.shareit.booking.service.BookingService;
 import ru.practicum.shareit.item.dto.CreateCommentDto;
 import ru.practicum.shareit.item.exception.ItemNotFoundException;
-import ru.practicum.shareit.item.exception.NotABookerException;
+import ru.practicum.shareit.item.exception.NotBookerException;
 import ru.practicum.shareit.item.model.Comment;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.item.repository.CommentRepository;
@@ -38,7 +38,7 @@ public class CommentServiceImpl implements CommentService {
                 && e.getStatus() == BookingStatus.APPROVED);
 
         if (!hasBooked) {
-            throw new NotABookerException();
+            throw new NotBookerException();
         }
 
         Item item = itemService.getItem(dto.getItemId())

@@ -23,7 +23,8 @@ class ItemDtoJsonTest {
         final String itemName = "Item";
         final String itemDescription = "Description";
 
-        ItemDto dto = new ItemDto(itemId, itemName, itemDescription, true, null, Collections.emptyList());
+        ItemDto dto = new ItemDto(itemId, itemName, itemDescription,
+            true, null, Collections.emptyList());
 
         // When
         JsonContent<ItemDto> result = json.write(dto);

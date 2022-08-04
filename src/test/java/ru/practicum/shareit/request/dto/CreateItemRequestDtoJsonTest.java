@@ -14,7 +14,8 @@ class CreateItemRequestDtoJsonTest {
     private JacksonTester<CreateItemRequestDto> json;
 
     @Test
-    public void givenCorrectJson_whenParseJson_thenCorrectObjectShouldBeReturned() throws Exception {
+    public void givenCorrectJson_whenParseJson_thenCorrectObjectShouldBeReturned()
+            throws Exception {
         // Given
         String jsonContent = "{\"description\":\"Description\"}";
 

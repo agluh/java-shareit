@@ -527,7 +527,7 @@ class BookingServiceImplTest {
     @Test
     void givenBookingPastState_whenGetItemBookingsOfCurrentUser_thenCorrectBookingsShouldBeFetched() {
         // Given
-        LocalDateTime now = LocalDateTime.now(clock);
+        final LocalDateTime now = LocalDateTime.now(clock);
 
         User owner = Mockito.mock(User.class);
         when(owner.getId()).thenReturn(1L);
@@ -550,7 +550,7 @@ class BookingServiceImplTest {
     @Test
     void givenBookingFutureState_whenGetItemBookingsOfCurrentUser_thenCorrectBookingsShouldBeFetched() {
         // Given
-        LocalDateTime now = LocalDateTime.now(clock);
+        final LocalDateTime now = LocalDateTime.now(clock);
 
         User owner = Mockito.mock(User.class);
         when(owner.getId()).thenReturn(1L);
@@ -573,7 +573,7 @@ class BookingServiceImplTest {
     @Test
     void givenBookingCurrentState_whenGetItemBookingsOfCurrentUser_thenCorrectBookingsShouldBeFetched() {
         // Given
-        LocalDateTime now = LocalDateTime.now(clock);
+        final LocalDateTime now = LocalDateTime.now(clock);
 
         User owner = Mockito.mock(User.class);
         when(owner.getId()).thenReturn(1L);

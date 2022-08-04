@@ -14,9 +14,11 @@ class CreateItemDtoJsonTest {
     private JacksonTester<CreateItemDto> json;
 
     @Test
-    public void givenCorrectJsonWithoutOptionalField_whenParseJson_thenCorrectObjectShouldBeReturned() throws Exception {
+    public void givenCorrectJsonWithoutOptionalField_whenParseJson_thenCorrectObjectShouldBeReturned()
+            throws Exception {
         // Given
-        String jsonContent = "{\"name\":\"Name\",\"description\":\"Description\",\"available\":true}";
+        String jsonContent =
+            "{\"name\":\"Name\",\"description\":\"Description\",\"available\":true}";
 
         // When
         CreateItemDto result = this.json.parse(jsonContent).getObject();
@@ -29,9 +31,11 @@ class CreateItemDtoJsonTest {
     }
 
     @Test
-    public void givenCorrectJsonWithOptionalField_whenParseJson_thenCorrectObjectShouldBeReturned() throws Exception {
+    public void givenCorrectJsonWithOptionalField_whenParseJson_thenCorrectObjectShouldBeReturned()
+            throws Exception {
         // Given
-        String jsonContent = "{\"name\":\"Name\",\"description\":\"Description\",\"available\":true,\"requestId\":1}";
+        String jsonContent = "{\"name\":\"Name\",\"description\":\"Description\","
+                + "\"available\":true,\"requestId\":1}";
 
         // When
         CreateItemDto result = this.json.parse(jsonContent).getObject();

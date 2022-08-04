@@ -16,9 +16,11 @@ class CreateBookingDtoJsonTest {
     private JacksonTester<CreateBookingDto> json;
 
     @Test
-    public void givenCorrectJson_whenParseJson_thenCorrectObjectShouldBeReturned() throws Exception {
+    public void givenCorrectJson_whenParseJson_thenCorrectObjectShouldBeReturned()
+            throws Exception {
         // Given
-        String jsonContent = "{\"start\":\"2022-08-01T09:50:00\",\"end\":\"2022-08-02T09:50:00\",\"itemId\":1}";
+        String jsonContent
+            = "{\"start\":\"2022-08-01T09:50:00\",\"end\":\"2022-08-02T09:50:00\",\"itemId\":1}";
 
         // When
         CreateBookingDto result = this.json.parse(jsonContent).getObject();

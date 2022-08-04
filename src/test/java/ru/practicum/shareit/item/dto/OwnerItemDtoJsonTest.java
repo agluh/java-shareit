@@ -17,7 +17,8 @@ class OwnerItemDtoJsonTest {
     private JacksonTester<OwnerItemDto> json;
 
     @Test
-    void givenOwnerItemDto_whenSerializeToJson_thenCorrectJsonShouldBeReturned() throws IOException {
+    void givenOwnerItemDto_whenSerializeToJson_thenCorrectJsonShouldBeReturned()
+            throws IOException {
         // Given
         final long itemId = 1;
         final long bookingId = 1;
@@ -40,8 +41,10 @@ class OwnerItemDtoJsonTest {
         then(result).extractingJsonPathNumberValue("$.requestId").isNull();
         then(result).hasJsonPathArrayValue("$.comments");
         then(result).hasJsonPathMapValue("$.lastBooking");
-        then(result).extractingJsonPathNumberValue("$.lastBooking.id").isEqualTo((int) bookingId);
-        then(result).extractingJsonPathNumberValue("$.lastBooking.bookerId").isEqualTo((int) bookerId);
+        then(result).extractingJsonPathNumberValue("$.lastBooking.id")
+            .isEqualTo((int) bookingId);
+        then(result).extractingJsonPathNumberValue("$.lastBooking.bookerId")
+            .isEqualTo((int) bookerId);
         then(result).extractingJsonPathValue("$.nextBooking").isNull();
     }
 }

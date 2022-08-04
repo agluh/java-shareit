@@ -14,7 +14,8 @@ class UpdateUserDtoJsonTest {
     private JacksonTester<UpdateUserDto> json;
 
     @Test
-    public void givenCorrectJson_whenParseJson_thenCorrectObjectShouldBeReturned() throws Exception {
+    public void givenCorrectJson_whenParseJson_thenCorrectObjectShouldBeReturned()
+            throws Exception {
         // Given
         String jsonContent = "{\"name\":\"Name\",\"email\":\"email@example.com\"}";
 
@@ -27,7 +28,8 @@ class UpdateUserDtoJsonTest {
     }
 
     @Test
-    public void givenCorrectJsonWithNameOnly_whenParseJson_thenCorrectObjectShouldBeReturned() throws Exception {
+    public void givenCorrectJsonWithNameOnly_whenParseJson_thenCorrectObjectShouldBeReturned()
+            throws Exception {
         // Given
         String jsonContent = "{\"name\":\"Name\"}";
 
@@ -40,7 +42,8 @@ class UpdateUserDtoJsonTest {
     }
 
     @Test
-    public void givenCorrectJsonWithEmailOnly_whenParseJson_thenCorrectObjectShouldBeReturned() throws Exception {
+    public void givenCorrectJsonWithEmailOnly_whenParseJson_thenCorrectObjectShouldBeReturned()
+            throws Exception {
         // Given
         String jsonContent = "{\"email\":\"email@example.com\"}";
 

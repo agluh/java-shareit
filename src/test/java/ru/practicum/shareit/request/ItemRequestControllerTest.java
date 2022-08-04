@@ -57,7 +57,8 @@ class ItemRequestControllerTest {
     }
 
     @Test
-    public void givenCorrectRequest_whenDoGetItemRequestsOfCurrentUser_thenStatus200() throws Exception {
+    public void givenCorrectRequest_whenDoGetItemRequestsOfCurrentUser_thenStatus200()
+            throws Exception {
         when(service.getItemRequestsOfCurrentUser()).thenReturn(Collections.emptyList());
 
         this.mockMvc
@@ -66,8 +67,10 @@ class ItemRequestControllerTest {
     }
 
     @Test
-    public void givenCorrectRequest_whenDoGetAvailableItemRequestsOfCurrentUser_thenStatus200() throws Exception {
-        when(service.getAvailableRequestsForCurrentUser(anyInt(), anyInt())).thenReturn(Collections.emptyList());
+    public void givenCorrectRequest_whenDoGetAvailableItemRequestsOfCurrentUser_thenStatus200()
+            throws Exception {
+        when(service.getAvailableRequestsForCurrentUser(anyInt(), anyInt()))
+            .thenReturn(Collections.emptyList());
 
         this.mockMvc
             .perform(get("/requests/all"))
@@ -75,7 +78,8 @@ class ItemRequestControllerTest {
     }
 
     @Test
-    public void givenMalformedRequest_whenDoGetAvailableItemRequestsOfCurrentUser_thenStatus400() throws Exception {
+    public void givenMalformedRequest_whenDoGetAvailableItemRequestsOfCurrentUser_thenStatus400()
+            throws Exception {
         this.mockMvc
             .perform(get("/requests/all")
                 .param("from", "-1"))
@@ -95,7 +99,8 @@ class ItemRequestControllerTest {
 
     @Test
     public void givenExistedItemRequest_whenDoGetItemRequest_thenStatus200() throws Exception {
-        when(service.getItemRequest(1)).thenReturn(Optional.of(Mockito.mock(ItemRequest.class)));
+        when(service.getItemRequest(1))
+            .thenReturn(Optional.of(Mockito.mock(ItemRequest.class)));
 
         this.mockMvc
             .perform(get("/requests/1"))

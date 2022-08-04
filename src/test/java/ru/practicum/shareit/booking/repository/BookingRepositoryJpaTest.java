@@ -39,7 +39,8 @@ class BookingRepositoryJpaTest {
         em.persist(booking);
 
         // When
-        Collection<Booking> result = repository.findBookingsByBookerIdOrderByStartDesc(booker.getId());
+        Collection<Booking> result =
+            repository.findBookingsByBookerIdOrderByStartDesc(booker.getId());
 
         // Then
         then(result).size().isEqualTo(1);
@@ -61,7 +62,8 @@ class BookingRepositoryJpaTest {
         em.persist(booking);
 
         // When
-        Collection<Booking> result = repository.findBookingsByBookerIdAndStatusOrderByStartDesc(booker.getId(), BookingStatus.REJECTED);
+        Collection<Booking> result = repository.findBookingsByBookerIdAndStatusOrderByStartDesc(
+            booker.getId(), BookingStatus.REJECTED);
 
         // Then
         then(result).size().isEqualTo(1);
@@ -84,7 +86,8 @@ class BookingRepositoryJpaTest {
         em.persist(booking);
 
         // When
-        Collection<Booking> result = repository.findBookingsByBookerIdAndEndBeforeOrderByStartDesc(booker.getId(), shouldEndedBefore);
+        Collection<Booking> result = repository.findBookingsByBookerIdAndEndBeforeOrderByStartDesc(
+            booker.getId(), shouldEndedBefore);
 
         // Then
         then(result).size().isEqualTo(1);
@@ -107,7 +110,8 @@ class BookingRepositoryJpaTest {
         em.persist(booking);
 
         // When
-        Collection<Booking> result = repository.findBookingsByBookerIdAndStartAfterOrderByStartDesc(booker.getId(), shouldStartAfter);
+        Collection<Booking> result = repository.findBookingsByBookerIdAndStartAfterOrderByStartDesc(
+            booker.getId(), shouldStartAfter);
 
         // Then
         then(result).size().isEqualTo(1);
@@ -131,7 +135,9 @@ class BookingRepositoryJpaTest {
         em.persist(booking);
 
         // When
-        Collection<Booking> result = repository.findBookingsByBookerIdAndStartBeforeAndEndAfterOrderByStartDesc(booker.getId(), shouldStartAfter, shouldEndedBefore);
+        Collection<Booking> result =
+            repository.findBookingsByBookerIdAndStartBeforeAndEndAfterOrderByStartDesc(
+                booker.getId(), shouldStartAfter, shouldEndedBefore);
 
         // Then
         then(result).size().isEqualTo(1);
@@ -153,7 +159,8 @@ class BookingRepositoryJpaTest {
         em.persist(booking);
 
         // When
-        Collection<Booking> result = repository.findBookingsByItemIdInOrderByStartDesc(List.of(item.getId()));
+        Collection<Booking> result =
+            repository.findBookingsByItemIdInOrderByStartDesc(List.of(item.getId()));
 
         // Then
         then(result).size().isEqualTo(1);
@@ -175,7 +182,8 @@ class BookingRepositoryJpaTest {
         em.persist(booking);
 
         // When
-        Collection<Booking> result = repository.findBookingsByItemIdInAndStatusOrderByStartDesc(List.of(item.getId()), BookingStatus.REJECTED);
+        Collection<Booking> result = repository.findBookingsByItemIdInAndStatusOrderByStartDesc(
+            List.of(item.getId()), BookingStatus.REJECTED);
 
         // Then
         then(result).size().isEqualTo(1);
@@ -198,7 +206,8 @@ class BookingRepositoryJpaTest {
         em.persist(booking);
 
         // When
-        Collection<Booking> result = repository.findBookingsByItemIdInAndEndBeforeOrderByStartDesc(List.of(item.getId()), shouldEndedBefore);
+        Collection<Booking> result = repository.findBookingsByItemIdInAndEndBeforeOrderByStartDesc(
+            List.of(item.getId()), shouldEndedBefore);
 
         // Then
         then(result).size().isEqualTo(1);
@@ -221,7 +230,8 @@ class BookingRepositoryJpaTest {
         em.persist(booking);
 
         // When
-        Collection<Booking> result = repository.findBookingsByItemIdInAndStartAfterOrderByStartDesc(List.of(item.getId()), shouldStartAfter);
+        Collection<Booking> result = repository.findBookingsByItemIdInAndStartAfterOrderByStartDesc(
+            List.of(item.getId()), shouldStartAfter);
 
         // Then
         then(result).size().isEqualTo(1);
@@ -245,7 +255,9 @@ class BookingRepositoryJpaTest {
         em.persist(booking);
 
         // When
-        Collection<Booking> result = repository.findBookingsByItemIdInAndStartBeforeAndEndAfterOrderByStartDesc(List.of(item.getId()), shouldStartAfter, shouldEndedBefore);
+        Collection<Booking> result =
+            repository.findBookingsByItemIdInAndStartBeforeAndEndAfterOrderByStartDesc(
+                List.of(item.getId()), shouldStartAfter, shouldEndedBefore);
 
         // Then
         then(result).size().isEqualTo(1);
@@ -268,7 +280,8 @@ class BookingRepositoryJpaTest {
         em.persist(booking);
 
         // When
-        Collection<Booking> result = repository.findBookingsByItemIdAndEndBeforeOrderByStartDesc(item.getId(), shouldEndedBefore);
+        Collection<Booking> result = repository.findBookingsByItemIdAndEndBeforeOrderByStartDesc(
+            item.getId(), shouldEndedBefore);
 
         // Then
         then(result).size().isEqualTo(1);
@@ -291,7 +304,8 @@ class BookingRepositoryJpaTest {
         em.persist(booking);
 
         // When
-        Collection<Booking> result = repository.findBookingsByItemIdAndStartAfterOrderByStartDesc(item.getId(), shouldStartAfter);
+        Collection<Booking> result = repository.findBookingsByItemIdAndStartAfterOrderByStartDesc(
+            item.getId(), shouldStartAfter);
 
         // Then
         then(result).size().isEqualTo(1);

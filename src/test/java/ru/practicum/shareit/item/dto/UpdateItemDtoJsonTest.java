@@ -14,9 +14,11 @@ class UpdateItemDtoJsonTest {
     private JacksonTester<UpdateItemDto> json;
 
     @Test
-    public void givenCorrectJson_whenParseJson_thenCorrectObjectShouldBeReturned() throws Exception {
+    public void givenCorrectJson_whenParseJson_thenCorrectObjectShouldBeReturned()
+            throws Exception {
         // Given
-        String jsonContent = "{\"name\":\"Name\",\"description\":\"Description\",\"available\":true}";
+        String jsonContent =
+            "{\"name\":\"Name\",\"description\":\"Description\",\"available\":true}";
 
         // When
         UpdateItemDto result = this.json.parse(jsonContent).getObject();
