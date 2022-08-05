@@ -4,10 +4,12 @@ import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Setter;
 import ru.practicum.shareit.booking.model.BookingStatus;
 
 @AllArgsConstructor
 @Getter
+@Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class BookingDto {
 
@@ -24,8 +26,9 @@ public class BookingDto {
 
     private BookingStatus status;
 
-    @Getter
     @AllArgsConstructor
+    @Getter
+    @Setter
     @EqualsAndHashCode
     public static class Booker {
 
@@ -34,9 +37,10 @@ public class BookingDto {
 
     @Getter
     @AllArgsConstructor
-    @EqualsAndHashCode
+    @EqualsAndHashCode(onlyExplicitlyIncluded = true)
     public static class Item {
 
+        @EqualsAndHashCode.Include
         private long id;
 
         private String name;

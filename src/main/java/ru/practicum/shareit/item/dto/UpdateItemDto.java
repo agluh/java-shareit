@@ -1,25 +1,27 @@
 package ru.practicum.shareit.item.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ru.practicum.shareit.item.validation.ValidItemPatch;
 
-@AllArgsConstructor
+@NoArgsConstructor
 @Getter
-@EqualsAndHashCode
+@Setter
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ValidItemPatch
 public class UpdateItemDto {
 
     @Setter
     @JsonIgnore
+    @EqualsAndHashCode.Include
     private long itemId;
 
-    private final String name;
+    private String name;
 
-    private final String description;
+    private String description;
 
-    private final Boolean available;
+    private Boolean available;
 }

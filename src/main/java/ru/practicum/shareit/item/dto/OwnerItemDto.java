@@ -4,32 +4,39 @@ import java.util.Collection;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.lang.Nullable;
 
 @AllArgsConstructor
 @Getter
+@Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class OwnerItemDto {
 
     @EqualsAndHashCode.Include
-    private final long id;
+    private long id;
 
-    private final String name;
+    private String name;
 
-    private final String description;
+    private String description;
 
-    private final boolean available;
+    private boolean available;
 
-    private final Collection<CommentDto> comments;
+    private Long requestId;
 
-    private final @Nullable Booking lastBooking;
+    private Collection<CommentDto> comments;
 
-    private final @Nullable Booking nextBooking;
+    private @Nullable Booking lastBooking;
+
+    private @Nullable Booking nextBooking;
 
     @AllArgsConstructor
     @Getter
+    @Setter
+    @EqualsAndHashCode(onlyExplicitlyIncluded = true)
     public static class Booking {
 
+        @EqualsAndHashCode.Include
         private long id;
 
         private long bookerId;

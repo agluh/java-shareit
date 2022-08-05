@@ -2,31 +2,38 @@ package ru.practicum.shareit.item;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
 import org.springframework.lang.Nullable;
+import org.springframework.stereotype.Service;
 import ru.practicum.shareit.booking.model.Booking;
 import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.dto.OwnerItemDto;
 import ru.practicum.shareit.item.model.Item;
 
+@Service
+@RequiredArgsConstructor
 public class ItemMapper {
 
-    public static ItemDto toDto(Item item) {
+    private final CommentMapper commentMapper;
+
+    public ItemDto toDto(Item item) {
         return new ItemDto(
             item.getId(),
             item.getName(),
             item.getDescription(),
             item.isAvailable(),
-            CommentMapper.toDto(item.getComments())
+            item.getRequest() != null ? item.getRequest().getId() : null,
+            commentMapper.toDto(item.getComments())
         );
     }
 
-    public static Collection<ItemDto> toDto(Collection<Item> items) {
+    public Collection<ItemDto> toDto(Collection<Item> items) {
         return items.stream()
-            .map(ItemMapper::toDto)
+            .map(this::toDto)
             .collect(Collectors.toList());
     }
 
-    public static OwnerItemDto toOwnerDto(
+    public OwnerItemDto toOwnerDto(
         Item item,
         @Nullable Booking lastBooking,
         @Nullable Booking nextBooking
@@ -36,7 +43,8 @@ public class ItemMapper {
             item.getName(),
             item.getDescription(),
             item.isAvailable(),
-            CommentMapper.toDto(item.getComments()),
+            item.getRequest() != null ? item.getRequest().getId() : null,
+            commentMapper.toDto(item.getComments()),
             lastBooking != null
                 ? new OwnerItemDto.Booking(lastBooking.getId(), lastBooking.getBooker().getId())
                 : null,

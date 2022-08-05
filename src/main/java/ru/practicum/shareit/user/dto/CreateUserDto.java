@@ -3,20 +3,22 @@ package ru.practicum.shareit.user.dto;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@AllArgsConstructor
+@NoArgsConstructor
 @Getter
+@Setter
 @EqualsAndHashCode
 public class CreateUserDto {
 
     @NotNull
     @NotBlank
-    private final String name;
+    private String name;
 
     @NotNull
     @Email
-    private final String email;
+    private String email;
 }

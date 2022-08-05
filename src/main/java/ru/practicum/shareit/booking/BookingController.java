@@ -28,11 +28,12 @@ import ru.practicum.shareit.booking.service.BookingService;
 public class BookingController {
 
     private final BookingService bookingService;
+    private final BookingMapper mapper;
 
     @PostMapping
     public BookingDto bookEntity(@Valid @RequestBody CreateBookingDto dto) {
         Booking booking = bookingService.createBooking(dto);
-        return BookingMapper.toDto(booking);
+        return mapper.toDto(booking);
     }
 
     @PatchMapping("/{bookingId}")
@@ -41,14 +42,14 @@ public class BookingController {
         @RequestParam("approved") Boolean isApproved
     ) {
         Booking booking = bookingService.reviewBooking(bookingId, isApproved);
-        return BookingMapper.toDto(booking);
+        return mapper.toDto(booking);
     }
 
     @GetMapping("/{bookingId}")
     public BookingDto getBooking(@PathVariable long bookingId) {
         Booking booking = bookingService.getBooking(bookingId)
             .orElseThrow(BookingNotFoundException::new);
-        return BookingMapper.toDto(booking);
+        return mapper.toDto(booking);
     }
 
     @GetMapping
@@ -56,7 +57,7 @@ public class BookingController {
         @RequestParam(name = "state", defaultValue = "ALL") BookingState state
     ) {
         return bookingService.getBookingsOfCurrentUser(state).stream()
-            .map(BookingMapper::toDto)
+            .map(mapper::toDto)
             .collect(Collectors.toList());
     }
 
@@ -65,7 +66,7 @@ public class BookingController {
         @RequestParam(name = "state", defaultValue = "ALL") BookingState state
     ) {
         return bookingService.getItemBookingsOfCurrentUser(state).stream()
-            .map(BookingMapper::toDto)
+            .map(mapper::toDto)
             .collect(Collectors.toList());
     }
 }

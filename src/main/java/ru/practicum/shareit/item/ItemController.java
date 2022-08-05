@@ -1,6 +1,5 @@
 package ru.practicum.shareit.item;
 
-import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
@@ -39,11 +38,13 @@ public class ItemController {
     private final CommentService commentService;
     private final BookingService bookingService;
     private final AuthService authService;
+    private final ItemMapper itemMapper;
+    private final CommentMapper commentMapper;
 
     @PostMapping
     public ItemDto addItem(@Valid @RequestBody CreateItemDto dto) {
         Item item = itemService.createItem(dto);
-        return ItemMapper.toDto(item);
+        return itemMapper.toDto(item);
     }
 
     @PatchMapping("/{id}")
@@ -53,39 +54,37 @@ public class ItemController {
     ) {
         dto.setItemId(itemId);
         Item updated = itemService.updateItem(dto);
-        return ItemMapper.toDto(updated);
+        return itemMapper.toDto(updated);
     }
 
     @GetMapping("/{id}")
     public OwnerItemDto getItem(@PathVariable("id") long itemId) {
         Item item = itemService.getItem(itemId).orElseThrow(ItemNotFoundException::new);
         if (authService.isCurrentUserIdEqualsTo(item.getOwner().getId())) {
-            LocalDateTime now = LocalDateTime.now();
-            return ItemMapper.toOwnerDto(
+            return itemMapper.toOwnerDto(
                 item,
-                bookingService.getPreviousBookingOfItem(itemId, now),
-                bookingService.getNextBookingOfItem(itemId, now)
+                bookingService.getPreviousBookingOfItem(itemId),
+                bookingService.getNextBookingOfItem(itemId)
             );
         } else {
-            return ItemMapper.toOwnerDto(item, null, null);
+            return itemMapper.toOwnerDto(item, null, null);
         }
     }
 
     @GetMapping
     public Collection<OwnerItemDto> getItemsOfCurrentUser() {
-        LocalDateTime now = LocalDateTime.now();
         return itemService.getItemsOfCurrentUser().stream()
-            .map(item -> ItemMapper.toOwnerDto(
+            .map(item -> itemMapper.toOwnerDto(
                 item,
-                bookingService.getPreviousBookingOfItem(item.getId(), now),
-                bookingService.getNextBookingOfItem(item.getId(), now)
+                bookingService.getPreviousBookingOfItem(item.getId()),
+                bookingService.getNextBookingOfItem(item.getId())
             ))
             .collect(Collectors.toList());
     }
 
     @GetMapping("/search")
     public Collection<ItemDto> searchItems(@RequestParam("text") String searchText) {
-        return ItemMapper.toDto(itemService.searchForItemsByNameAndDesc(searchText));
+        return itemMapper.toDto(itemService.searchForItemsByNameAndDesc(searchText));
     }
 
     @PostMapping("/{itemId}/comment")
@@ -95,6 +94,6 @@ public class ItemController {
     ) {
         dto.setItemId(itemId);
         Comment comment = commentService.addComment(dto);
-        return CommentMapper.toDto(comment);
+        return commentMapper.toDto(comment);
     }
 }

@@ -3,16 +3,18 @@ package ru.practicum.shareit.user.dto;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Setter;
 
 @AllArgsConstructor
 @Getter
+@Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class UserDto {
 
     @EqualsAndHashCode.Include
-    private final long id;
+    private long id;
 
-    private final String name;
+    private String name;
 
-    private final String email;
+    private String email;
 }

@@ -1,5 +1,6 @@
 package ru.practicum.shareit.item.service.impl;
 
+import java.time.Clock;
 import java.time.LocalDateTime;
 import javax.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -9,7 +10,7 @@ import ru.practicum.shareit.booking.model.BookingStatus;
 import ru.practicum.shareit.booking.service.BookingService;
 import ru.practicum.shareit.item.dto.CreateCommentDto;
 import ru.practicum.shareit.item.exception.ItemNotFoundException;
-import ru.practicum.shareit.item.exception.NotABookerException;
+import ru.practicum.shareit.item.exception.NotBookerException;
 import ru.practicum.shareit.item.model.Comment;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.item.repository.CommentRepository;
@@ -26,6 +27,7 @@ public class CommentServiceImpl implements CommentService {
     private final ItemService itemService;
     private final BookingService bookingService;
     private final AuthService authService;
+    private final Clock clock;
 
     @Override
     @Transactional
@@ -36,7 +38,7 @@ public class CommentServiceImpl implements CommentService {
                 && e.getStatus() == BookingStatus.APPROVED);
 
         if (!hasBooked) {
-            throw new NotABookerException();
+            throw new NotBookerException();
         }
 
         Item item = itemService.getItem(dto.getItemId())
@@ -44,7 +46,7 @@ public class CommentServiceImpl implements CommentService {
 
         User user = authService.getCurrentUser();
 
-        Comment comment = new Comment(null, dto.getText(), item, user, LocalDateTime.now());
+        Comment comment = new Comment(null, dto.getText(), item, user, LocalDateTime.now(clock));
         item.addComment(comment);
         commentRepository.save(comment);
         return comment;

@@ -19,6 +19,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import ru.practicum.shareit.request.model.ItemRequest;
 import ru.practicum.shareit.user.model.User;
 
 @AllArgsConstructor
@@ -47,8 +48,9 @@ public class Item {
     @JoinColumn(name = "owner_id")
     private User owner;
 
-    @Column(name = "request_id")
-    private Long requestId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "request_id")
+    private ItemRequest request;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "item")
     private final Collection<Comment> comments = new ArrayList<>();

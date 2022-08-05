@@ -28,11 +28,12 @@ import ru.practicum.shareit.user.service.UserService;
 public class UserController {
 
     private final UserService userService;
+    private final UserMapper mapper;
 
     @PostMapping
     public UserDto registerUser(@Valid @RequestBody CreateUserDto dto) {
         User created = userService.createUser(dto);
-        return UserMapper.toDto(created);
+        return mapper.toDto(created);
     }
 
     @PatchMapping("/{id}")
@@ -41,19 +42,19 @@ public class UserController {
         @Valid @RequestBody UpdateUserDto dto
     ) {
         User updated = userService.updateUser(userId, dto);
-        return UserMapper.toDto(updated);
+        return mapper.toDto(updated);
     }
 
     @GetMapping("/{id}")
     public UserDto getUser(@PathVariable("id") long userId) {
         User user = userService.getUser(userId).orElseThrow(UserNotFoundException::new);
-        return UserMapper.toDto(user);
+        return mapper.toDto(user);
     }
 
     @GetMapping
     public Collection<UserDto> getUsers() {
         return userService.getUsers().stream()
-            .map(UserMapper::toDto)
+            .map(mapper::toDto)
             .collect(Collectors.toList());
     }
 
