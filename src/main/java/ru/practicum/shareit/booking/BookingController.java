@@ -54,29 +54,19 @@ public class BookingController {
 
     @GetMapping
     public Collection<BookingDto> getBookingsOfCurrentUser(
-        @RequestParam(name = "state", defaultValue = "ALL") String state
+        @RequestParam(name = "state", defaultValue = "ALL") BookingState state
     ) {
-        try {
-            BookingState bookingState = BookingState.valueOf(state);
-            return bookingService.getBookingsOfCurrentUser(bookingState).stream()
-                .map(mapper::toDto)
-                .collect(Collectors.toList());
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException(String.format("Unknown state: %s", state));
-        }
+        return bookingService.getBookingsOfCurrentUser(state).stream()
+            .map(mapper::toDto)
+            .collect(Collectors.toList());
     }
 
     @GetMapping("/owner")
     public Collection<BookingDto> getItemBookingsOfCurrentUser(
-        @RequestParam(name = "state", defaultValue = "ALL") String state
+        @RequestParam(name = "state", defaultValue = "ALL") BookingState state
     ) {
-        try {
-            BookingState bookingState = BookingState.valueOf(state);
-            return bookingService.getItemBookingsOfCurrentUser(bookingState).stream()
-                .map(mapper::toDto)
-                .collect(Collectors.toList());
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException(String.format("Unknown state: %s", state));
-        }
+        return bookingService.getItemBookingsOfCurrentUser(state).stream()
+            .map(mapper::toDto)
+            .collect(Collectors.toList());
     }
 }

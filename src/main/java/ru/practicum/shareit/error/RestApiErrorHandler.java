@@ -2,6 +2,7 @@ package ru.practicum.shareit.error;
 
 import java.util.Map;
 import javax.validation.ConstraintViolationException;
+import org.springframework.core.convert.ConversionFailedException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +26,18 @@ public class RestApiErrorHandler {
         IllegalArgumentException.class
     })
     public ResponseEntity<?> handleBadRequest(Exception ex, WebRequest request) {
-        Map<String, String> msg = Map.of("error", ex.getMessage());
+        String error = ex.getMessage();
+        if (ex.getCause() != null) {
+            Throwable cause = ex.getCause();
+            if (cause instanceof ConversionFailedException) {
+                ConversionFailedException conversionEx = (ConversionFailedException) cause;
+                if (conversionEx.getCause() != null) {
+                    error = conversionEx.getCause().getMessage();
+                }
+            }
+        }
+
+        Map<String, String> msg = Map.of("error", error);
         return new ResponseEntity<>(msg, new HttpHeaders(), HttpStatus.BAD_REQUEST);
     }
 }
