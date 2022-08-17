@@ -218,7 +218,7 @@ class ItemServiceImplTest {
         itemService.getItemsOfCurrentUser(0, 10);
 
         // Then
-        verify(itemRepository, times(1)).findItemsByOwnerIdOrderByIdAsc(1L,
+        verify(itemRepository, times(1)).findItemsOwnedByUser(1L,
             Pageable.ofSize(10));
     }
 

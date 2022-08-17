@@ -74,7 +74,7 @@ class ItemRequestServiceImplTest {
 
         // Then
         verify(repository, times(1))
-            .findItemRequestsByRequester_IdOrderByCreatedAtDesc(userId, Pageable.ofSize(10));
+            .findItemRequestsOfUser(userId, Pageable.ofSize(10));
     }
 
     @Test
@@ -91,6 +91,6 @@ class ItemRequestServiceImplTest {
 
         // Then
         verify(repository, times(1))
-            .findItemRequestsByRequester_IdIsNotOrderByCreatedAtDesc(userId, Pageable.ofSize(10));
+            .findItemRequestsOfOtherUsers(userId, Pageable.ofSize(10));
     }
 }

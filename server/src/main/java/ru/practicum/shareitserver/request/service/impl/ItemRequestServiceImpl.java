@@ -41,7 +41,7 @@ public class ItemRequestServiceImpl implements ItemRequestService {
     public Collection<ItemRequest> getItemRequestsOfCurrentUser(int from, int size) {
         User user = authService.getCurrentUser();
         int page = from / size;
-        return repository.findItemRequestsByRequester_IdOrderByCreatedAtDesc(user.getId(),
+        return repository.findItemRequestsOfUser(user.getId(),
             PageRequest.of(page, size));
     }
 
@@ -49,7 +49,7 @@ public class ItemRequestServiceImpl implements ItemRequestService {
     public Collection<ItemRequest> getAvailableRequestsForCurrentUser(int from, int size) {
         User user = authService.getCurrentUser();
         int page = from / size;
-        return repository.findItemRequestsByRequester_IdIsNotOrderByCreatedAtDesc(user.getId(),
+        return repository.findItemRequestsOfOtherUsers(user.getId(),
             PageRequest.of(page, size));
     }
 }

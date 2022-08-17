@@ -107,24 +107,24 @@ public class BookingServiceImpl implements BookingService {
 
         switch (state) {
             case WAITING:
-                return bookingRepository.findBookingsByBookerIdAndStatusOrderByStartDesc(
+                return bookingRepository.findBookingsOfUserWithStatus(
                     user.getId(), BookingStatus.WAITING, PageRequest.of(page, size));
             case REJECTED:
-                return bookingRepository.findBookingsByBookerIdAndStatusOrderByStartDesc(
+                return bookingRepository.findBookingsOfUserWithStatus(
                     user.getId(), BookingStatus.REJECTED, PageRequest.of(page, size));
             case PAST:
-                return bookingRepository.findBookingsByBookerIdAndEndBeforeOrderByStartDesc(
+                return bookingRepository.findPastBookingsOfUser(
                     user.getId(), LocalDateTime.now(clock), PageRequest.of(page, size));
             case FUTURE:
-                return bookingRepository.findBookingsByBookerIdAndStartAfterOrderByStartDesc(
+                return bookingRepository.findFutureBookingsOfUser(
                     user.getId(), LocalDateTime.now(clock), PageRequest.of(page, size));
             case CURRENT:
                 LocalDateTime now = LocalDateTime.now(clock);
                 return bookingRepository
-                    .findBookingsByBookerIdAndStartBeforeAndEndAfterOrderByStartDesc(
+                    .findBookingsOfUserBetween(
                         user.getId(), now, now, PageRequest.of(page, size));
             case ALL:
-                return bookingRepository.findBookingsByBookerIdOrderByStartDesc(user.getId(),
+                return bookingRepository.findBookingsOfUser(user.getId(),
                     PageRequest.of(page, size));
 
             default:
@@ -147,24 +147,24 @@ public class BookingServiceImpl implements BookingService {
 
         switch (state) {
             case WAITING:
-                return bookingRepository.findBookingsByItemIdInAndStatusOrderByStartDesc(
+                return bookingRepository.findBookingsOfItemsWithStatus(
                     ids, BookingStatus.WAITING, PageRequest.of(page, size));
             case REJECTED:
-                return bookingRepository.findBookingsByItemIdInAndStatusOrderByStartDesc(
+                return bookingRepository.findBookingsOfItemsWithStatus(
                     ids, BookingStatus.REJECTED, PageRequest.of(page, size));
             case PAST:
-                return bookingRepository.findBookingsByItemIdInAndEndBeforeOrderByStartDesc(
+                return bookingRepository.findPastBookingsOfItems(
                     ids, LocalDateTime.now(clock), PageRequest.of(page, size));
             case FUTURE:
-                return bookingRepository.findBookingsByItemIdInAndStartAfterOrderByStartDesc(
+                return bookingRepository.findFutureBookingsOfItems(
                     ids, LocalDateTime.now(clock), PageRequest.of(page, size));
             case CURRENT:
                 LocalDateTime now = LocalDateTime.now(clock);
                 return bookingRepository
-                    .findBookingsByItemIdInAndStartBeforeAndEndAfterOrderByStartDesc(
+                    .findBookingsOfItemsBetween(
                         ids, now, now, PageRequest.of(page, size));
             case ALL:
-                return bookingRepository.findBookingsByItemIdInOrderByStartDesc(ids,
+                return bookingRepository.findBookingsItems(ids,
                     PageRequest.of(page, size));
 
             default:
@@ -175,7 +175,7 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public Booking getPreviousBookingOfItem(long itemId) {
         LocalDateTime now = LocalDateTime.now(clock);
-        return bookingRepository.findBookingsByItemIdAndEndBeforeOrderByStartDesc(itemId, now)
+        return bookingRepository.findPastBookingsOfItem(itemId, now)
             .stream()
             .max(Comparator.comparing(Booking::getEnd))
             .orElse(null);
@@ -184,7 +184,7 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public Booking getNextBookingOfItem(long itemId) {
         LocalDateTime now = LocalDateTime.now(clock);
-        return bookingRepository.findBookingsByItemIdAndStartAfterOrderByStartDesc(itemId, now)
+        return bookingRepository.findFutureBookingsOfItem(itemId, now)
             .stream()
             .findFirst()
             .orElse(null);

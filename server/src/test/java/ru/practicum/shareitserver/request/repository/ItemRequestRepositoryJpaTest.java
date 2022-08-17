@@ -33,7 +33,7 @@ class ItemRequestRepositoryJpaTest {
 
         // When
         Collection<ItemRequest> result =
-            repository.findItemRequestsByRequester_IdOrderByCreatedAtDesc(requester.getId(),
+            repository.findItemRequestsOfUser(requester.getId(),
                 Pageable.unpaged());
 
         // Then
@@ -54,7 +54,7 @@ class ItemRequestRepositoryJpaTest {
 
         // When
         Collection<ItemRequest> result =
-            repository.findItemRequestsByRequester_IdIsNotOrderByCreatedAtDesc(user.getId(),
+            repository.findItemRequestsOfOtherUsers(user.getId(),
                 Pageable.unpaged());
 
         // Then

@@ -30,7 +30,7 @@ class ItemRepositoryJpaTest {
         em.persist(item);
 
         // When
-        Collection<Item> result = repository.findItemsByOwnerIdOrderByIdAsc(owner.getId(),
+        Collection<Item> result = repository.findItemsOwnedByUser(owner.getId(),
             Pageable.unpaged());
 
         // Then

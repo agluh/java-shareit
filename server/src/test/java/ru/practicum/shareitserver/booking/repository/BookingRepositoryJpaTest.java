@@ -41,7 +41,7 @@ class BookingRepositoryJpaTest {
 
         // When
         Collection<Booking> result =
-            repository.findBookingsByBookerIdOrderByStartDesc(booker.getId(), Pageable.unpaged());
+            repository.findBookingsOfUser(booker.getId(), Pageable.unpaged());
 
         // Then
         then(result).size().isEqualTo(1);
@@ -63,7 +63,7 @@ class BookingRepositoryJpaTest {
         em.persist(booking);
 
         // When
-        Collection<Booking> result = repository.findBookingsByBookerIdAndStatusOrderByStartDesc(
+        Collection<Booking> result = repository.findBookingsOfUserWithStatus(
             booker.getId(), BookingStatus.REJECTED, Pageable.unpaged());
 
         // Then
@@ -87,7 +87,7 @@ class BookingRepositoryJpaTest {
         em.persist(booking);
 
         // When
-        Collection<Booking> result = repository.findBookingsByBookerIdAndEndBeforeOrderByStartDesc(
+        Collection<Booking> result = repository.findPastBookingsOfUser(
             booker.getId(), shouldEndedBefore, Pageable.unpaged());
 
         // Then
@@ -111,7 +111,7 @@ class BookingRepositoryJpaTest {
         em.persist(booking);
 
         // When
-        Collection<Booking> result = repository.findBookingsByBookerIdAndStartAfterOrderByStartDesc(
+        Collection<Booking> result = repository.findFutureBookingsOfUser(
             booker.getId(), shouldStartAfter, Pageable.unpaged());
 
         // Then
@@ -137,7 +137,7 @@ class BookingRepositoryJpaTest {
 
         // When
         Collection<Booking> result =
-            repository.findBookingsByBookerIdAndStartBeforeAndEndAfterOrderByStartDesc(
+            repository.findBookingsOfUserBetween(
                 booker.getId(), shouldStartAfter, shouldEndedBefore, Pageable.unpaged());
 
         // Then
@@ -161,7 +161,7 @@ class BookingRepositoryJpaTest {
 
         // When
         Collection<Booking> result =
-            repository.findBookingsByItemIdInOrderByStartDesc(List.of(item.getId()),
+            repository.findBookingsItems(List.of(item.getId()),
                 Pageable.unpaged());
 
         // Then
@@ -184,7 +184,7 @@ class BookingRepositoryJpaTest {
         em.persist(booking);
 
         // When
-        Collection<Booking> result = repository.findBookingsByItemIdInAndStatusOrderByStartDesc(
+        Collection<Booking> result = repository.findBookingsOfItemsWithStatus(
             List.of(item.getId()), BookingStatus.REJECTED, Pageable.unpaged());
 
         // Then
@@ -208,7 +208,7 @@ class BookingRepositoryJpaTest {
         em.persist(booking);
 
         // When
-        Collection<Booking> result = repository.findBookingsByItemIdInAndEndBeforeOrderByStartDesc(
+        Collection<Booking> result = repository.findPastBookingsOfItems(
             List.of(item.getId()), shouldEndedBefore, Pageable.unpaged());
 
         // Then
@@ -232,7 +232,7 @@ class BookingRepositoryJpaTest {
         em.persist(booking);
 
         // When
-        Collection<Booking> result = repository.findBookingsByItemIdInAndStartAfterOrderByStartDesc(
+        Collection<Booking> result = repository.findFutureBookingsOfItems(
             List.of(item.getId()), shouldStartAfter, Pageable.unpaged());
 
         // Then
@@ -258,7 +258,7 @@ class BookingRepositoryJpaTest {
 
         // When
         Collection<Booking> result =
-            repository.findBookingsByItemIdInAndStartBeforeAndEndAfterOrderByStartDesc(
+            repository.findBookingsOfItemsBetween(
                 List.of(item.getId()), shouldStartAfter, shouldEndedBefore, Pageable.unpaged());
 
         // Then
@@ -282,7 +282,7 @@ class BookingRepositoryJpaTest {
         em.persist(booking);
 
         // When
-        Collection<Booking> result = repository.findBookingsByItemIdAndEndBeforeOrderByStartDesc(
+        Collection<Booking> result = repository.findPastBookingsOfItem(
             item.getId(), shouldEndedBefore);
 
         // Then
@@ -306,7 +306,7 @@ class BookingRepositoryJpaTest {
         em.persist(booking);
 
         // When
-        Collection<Booking> result = repository.findBookingsByItemIdAndStartAfterOrderByStartDesc(
+        Collection<Booking> result = repository.findFutureBookingsOfItem(
             item.getId(), shouldStartAfter);
 
         // Then

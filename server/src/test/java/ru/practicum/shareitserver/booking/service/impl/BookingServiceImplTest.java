@@ -385,7 +385,7 @@ class BookingServiceImplTest {
 
         // Then
         verify(bookingRepository, times(1))
-            .findBookingsByBookerIdAndStatusOrderByStartDesc(1L, BookingStatus.WAITING,
+            .findBookingsOfUserWithStatus(1L, BookingStatus.WAITING,
                 Pageable.ofSize(10));
     }
 
@@ -401,7 +401,7 @@ class BookingServiceImplTest {
 
         // Then
         verify(bookingRepository, times(1))
-            .findBookingsByBookerIdAndStatusOrderByStartDesc(1L, BookingStatus.REJECTED,
+            .findBookingsOfUserWithStatus(1L, BookingStatus.REJECTED,
                 Pageable.ofSize(10));
     }
 
@@ -418,7 +418,7 @@ class BookingServiceImplTest {
 
         // Then
         verify(bookingRepository, times(1))
-            .findBookingsByBookerIdAndEndBeforeOrderByStartDesc(1L, now, Pageable.ofSize(10));
+            .findPastBookingsOfUser(1L, now, Pageable.ofSize(10));
     }
 
     @Test
@@ -434,7 +434,7 @@ class BookingServiceImplTest {
 
         // Then
         verify(bookingRepository, times(1))
-            .findBookingsByBookerIdAndStartAfterOrderByStartDesc(1L, now, Pageable.ofSize(10));
+            .findFutureBookingsOfUser(1L, now, Pageable.ofSize(10));
     }
 
     @Test
@@ -450,7 +450,7 @@ class BookingServiceImplTest {
 
         // Then
         verify(bookingRepository, times(1))
-            .findBookingsByBookerIdAndStartBeforeAndEndAfterOrderByStartDesc(1L, now, now,
+            .findBookingsOfUserBetween(1L, now, now,
                 Pageable.ofSize(10));
     }
 
@@ -466,7 +466,7 @@ class BookingServiceImplTest {
 
         // Then
         verify(bookingRepository, times(1))
-            .findBookingsByBookerIdOrderByStartDesc(1L, Pageable.ofSize(10));
+            .findBookingsOfUser(1L, Pageable.ofSize(10));
     }
 
     @Test
@@ -504,7 +504,7 @@ class BookingServiceImplTest {
 
         // Then
         verify(bookingRepository, times(1))
-            .findBookingsByItemIdInAndStatusOrderByStartDesc(List.of(1L), BookingStatus.WAITING,
+            .findBookingsOfItemsWithStatus(List.of(1L), BookingStatus.WAITING,
                 Pageable.ofSize(10));
     }
 
@@ -526,7 +526,7 @@ class BookingServiceImplTest {
 
         // Then
         verify(bookingRepository, times(1))
-            .findBookingsByItemIdInAndStatusOrderByStartDesc(List.of(1L), BookingStatus.REJECTED,
+            .findBookingsOfItemsWithStatus(List.of(1L), BookingStatus.REJECTED,
                 Pageable.ofSize(10));
     }
 
@@ -550,7 +550,7 @@ class BookingServiceImplTest {
 
         // Then
         verify(bookingRepository, times(1))
-            .findBookingsByItemIdInAndEndBeforeOrderByStartDesc(List.of(1L), now,
+            .findPastBookingsOfItems(List.of(1L), now,
                 Pageable.ofSize(10));
     }
 
@@ -574,7 +574,7 @@ class BookingServiceImplTest {
 
         // Then
         verify(bookingRepository, times(1))
-            .findBookingsByItemIdInAndStartAfterOrderByStartDesc(List.of(1L), now,
+            .findFutureBookingsOfItems(List.of(1L), now,
                 Pageable.ofSize(10));
     }
 
@@ -598,7 +598,7 @@ class BookingServiceImplTest {
 
         // Then
         verify(bookingRepository, times(1))
-            .findBookingsByItemIdInAndStartBeforeAndEndAfterOrderByStartDesc(List.of(1L), now, now,
+            .findBookingsOfItemsBetween(List.of(1L), now, now,
                 Pageable.ofSize(10));
     }
 
@@ -620,7 +620,7 @@ class BookingServiceImplTest {
 
         // Then
         verify(bookingRepository, times(1))
-            .findBookingsByItemIdInOrderByStartDesc(List.of(1L), Pageable.ofSize(10));
+            .findBookingsItems(List.of(1L), Pageable.ofSize(10));
     }
 
     @Test
@@ -633,7 +633,7 @@ class BookingServiceImplTest {
 
         // Then
         verify(bookingRepository, times(1))
-            .findBookingsByItemIdAndEndBeforeOrderByStartDesc(1, now);
+            .findPastBookingsOfItem(1, now);
     }
 
     @Test
@@ -646,6 +646,6 @@ class BookingServiceImplTest {
 
         // Then
         verify(bookingRepository, times(1))
-            .findBookingsByItemIdAndStartAfterOrderByStartDesc(1, now);
+            .findFutureBookingsOfItem(1, now);
     }
 }

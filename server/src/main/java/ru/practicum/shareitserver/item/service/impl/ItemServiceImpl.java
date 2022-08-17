@@ -84,14 +84,14 @@ public class ItemServiceImpl implements ItemService {
     public Collection<Item> getItemsOfCurrentUser(int from, int size) {
         User user = authService.getCurrentUser();
         int page = from / size;
-        return itemRepository.findItemsByOwnerIdOrderByIdAsc(user.getId(),
+        return itemRepository.findItemsOwnedByUser(user.getId(),
             PageRequest.of(page, size));
     }
 
     @Override
     public Collection<Item> getItemsOfCurrentUser() {
         User user = authService.getCurrentUser();
-        return itemRepository.findItemsByOwnerIdOrderByIdAsc(user.getId(), Pageable.unpaged());
+        return itemRepository.findItemsOwnedByUser(user.getId(), Pageable.unpaged());
     }
 
     @Override
