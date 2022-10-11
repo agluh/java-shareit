@@ -3,6 +3,10 @@ name: ShareIt API Tests
 on:
   pull_request:
 
+env:
+  DB_USER: ${{ secrets.DB_USER }}
+  DB_PASS: ${{ secrets.DB_PASS }}
+
 jobs:
   build:
 
