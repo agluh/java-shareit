@@ -24,8 +24,8 @@ services:
       DB_HOST: db
       DB_PORT: 5432
       DB_NAME: shareit
-      DB_USER: shareit
-      DB_PASS: shareit
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASS}
       TZ: "Europe/Moscow"
 
   db:
@@ -36,8 +36,8 @@ services:
       - "5432:5432"
     environment:
       POSTGRES_DB: shareit
-      POSTGRES_USER: shareit
-      POSTGRES_PASSWORD: shareit
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
       PGDATA: /var/lib/postgresql/data/pgdata
     volumes:
       - ./postgres_db:/var/lib/postgresql/data
